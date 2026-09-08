@@ -1,0 +1,7 @@
+---
+title: "Investigating the Strongest Predictors of Cardiovascular Disease"
+---
+
+## Introduction
+
+In this project, I aim to examine which demographic, physiological, and lifestyle factors are the strongest predictors of cardiovascular disease. By collecting and analyzing data on factors such as age, blood pressure, cholesterol, smoking status, diabetes, BMI, and physical activity, I will investigate how these variables relate to cardiovascular disease and determine which factors have the greatest predictive significance. The goal of this project is to use data-driven analysis to better understand patterns associated with cardiovascular disease and identify the factors that may be most useful for predicting cardiovascular risk.

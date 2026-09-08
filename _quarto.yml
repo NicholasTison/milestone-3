@@ -1,0 +1,21 @@
+project:
+  type: website
+
+website:
+  title: "Heart Attack Risk Study"
+  navbar:
+    left:
+      - href: index.qmd
+        text: "Home"
+      - href: analysis.qmd
+        text: "Analysis"
+
+format:
+  html:
+    theme: cosmo
+    toc: true
+
+execute:
+  echo: false
+  warning: false
+  message: false

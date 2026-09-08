@@ -1,0 +1,93 @@
+---
+title: "Analysis"
+execute:
+  echo: false
+  warning: false
+  message: false
+---
+
+## Analysis
+
+```{r}
+#| message: false
+#| warning: false
+
+library(tidyverse)
+
+# Read CDC mortality dataset
+mortality <- read_csv("data/cdc_mortality_trends_2015_2023.csv", show_col_types = FALSE)
+
+cvd_causes <- c(
+  "Ischemic heart disease",
+  "Heart failure",
+  "Hypertensive diseases",
+  "Cerebrovascular diseases"
+)
+
+national_cvd <- mortality |>
+  filter(
+    jurisdiction == "United States",
+    cause_subgroup %in% cvd_causes
+  )
+```
+
+### Cardiovascular Deaths Over Time (2015–2023)
+
+```{r}
+# Line graph showing national trends over the past decade
+ggplot(national_cvd, aes(x = year, y = deaths, color = cause_subgroup)) +
+  geom_line(linewidth = 1.2) +
+  geom_point(size = 2) +
+  scale_y_continuous(labels = scales::label_comma()) +
+  scale_x_continuous(breaks = 2015:2023) +
+  labs(
+    title = "U.S. Cardiovascular Deaths (2015–2023)",
+    subtitle = "Annual national trends from CDC Provisional Mortality Statistics",
+    x = "Year",
+    y = "Total Deaths",
+    color = "Condition"
+  ) +
+  theme_minimal()
+```
+
+### Comparing Conditions in 2023
+
+```{r}
+# Bar chart comparing deaths across conditions in the most recent year
+national_cvd |>
+  filter(year == 2023) |>
+  ggplot(aes(x = reorder(cause_subgroup, deaths), y = deaths, fill = cause_subgroup)) +
+  geom_col(show.legend = FALSE) +
+  coord_flip() +
+  scale_y_continuous(labels = scales::label_comma()) +
+  labs(
+    title = "Cardiovascular Deaths by Condition in 2023",
+    subtitle = "Ischemic heart disease remains the primary cause of cardiovascular mortality",
+    x = NULL,
+    y = "Total Deaths"
+  ) +
+  theme_minimal()
+```
+
+### Growth Trajectories by Condition
+
+```{r}
+# Faceted area plot showing individual trajectories and scale
+national_cvd |>
+  ggplot(aes(x = year, y = deaths, fill = cause_subgroup)) +
+  geom_area(alpha = 0.7, show.legend = FALSE) +
+  facet_wrap(~cause_subgroup, scales = "free_y") +
+  scale_y_continuous(labels = scales::label_comma()) +
+  scale_x_continuous(breaks = c(2015, 2017, 2019, 2021, 2023)) +
+  labs(
+    title = "Trajectories by Cardiovascular Condition (2015–2023)",
+    subtitle = "Faceted view highlighting differences in scale and growth rate",
+    x = "Year",
+    y = "Annual Deaths"
+  ) +
+  theme_minimal()
+```
+
+## Conclusion
+
+Add your conclusions here.
